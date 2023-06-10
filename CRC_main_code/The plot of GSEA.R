@@ -14,9 +14,9 @@ library(enrichplot)
 library(doBy)###
 rm(list = ls())
 setwd("F:\\2study\\CRC_study\\data\\real_data\\GSEA")
-###发现集表达谱
+
 discovery_exp<-read.csv("discovery_end_exp.txt",stringsAsFactors = F,header = T,sep = "\t",row.names = 1)
-###分析细胞类型和分细胞状态
+
 filename_select_group <- list.files("F:\\2study\\CRC_study\\data\\real_data\\GSEA\\cell_group_info")
 
 
@@ -28,21 +28,21 @@ cells<-c('B.cells','CD4.T.cells','CD8.T.cells','Dendritic.cells','Endothelial.ce
 ###
 diff_result_road<-"F:\\2study\\CRC_study\\data\\real_data\\GSEA\\diff_result\\"
 
-####秩和分析计算了所有细胞状态的差异基因
+
 Sys.time()
 for (r in 1:length(cells)) {
   
   
-  ###读取细胞类型状态分组
+ 
   state<-read.table(paste0("F:\\2study\\CRC_study\\data\\real_data\\GSEA\\cell_group_info\\",
                            filename_select_group[r]),as.is=T,header = T,sep = "\t")
   cell_state<-state[,c(1,2)]
   
-  ###提取细胞类型表达谱
+ 
   gene<-discovery_exp[,which(colnames(discovery_exp) %in% cell_state$ID)]
   
   state_name<-unique(cell_state$State)
-  ###秩和检验计算差异表达基因
+ 
   for (m in 1:length(state_name)) {
     
     cell_state[which(cell_state$State==state_name[m]),3]<-c("group1")
@@ -233,19 +233,16 @@ library(enrichplot)
 
 rm(list = ls())
 
-##存储GSEA结果的文件夹
+##
 eachstate_GSEA_road<-"F:\\2study\\CRC_study\\data\\real_data\\GSEA\\67_GSEA_result\\"
 
-######准备数据
 
 setwd("F:\\2study\\CRC_study\\data\\real_data\\GSEA")
-###67条通路数据
+
 kegmt<-read.gmt("all_pathway.gmt")
 
 
-
-
-###基因数据
+###
 filename_select_group <- list.files("F:\\2study\\CRC_study\\data\\real_data\\GSEA\\diff_result_sort")
 
 for (i in 1:length(filename_select_group)) {
@@ -323,7 +320,7 @@ setwd("F:\\2study\\CRC_study\\data\\real_data\\GSEA\\67_GSEA_result")
 
 GSEA_list<-read.csv("CD4.T.cells_S02.txt",stringsAsFactors = F,header = T,sep = "\t")
 
-###按NES从低到高排序
+###
 GSEA_list=GSEA_list[order(GSEA_list$NES,decreasing = F),]
 
 
@@ -376,7 +373,7 @@ setwd("F:\\2study\\CRC_study\\data\\real_data\\GSEA\\67_GSEA_result")
 
 GSEA_list<-read.csv("Fibroblasts_S03.txt",stringsAsFactors = F,header = T,sep = "\t")
 
-###按NES从低到高排序
+###
 GSEA_list=GSEA_list[order(GSEA_list$NES,decreasing = F),]
 
 
@@ -417,7 +414,7 @@ p+ geom_text_repel(
   color = "black",#mycolor[res2[res2$padj<0.05&abs(res2$log2FoldChange)>1,'gene_type']],#
   segment.color = "black", show.legend = FALSE )
 
-###纵坐标截断
+##
 # BiocManager::install("gg.gap")
 
 
@@ -482,14 +479,10 @@ dev.off()
 
 
 
-####将所有的GSEA结果合并为一个表格
-
 rm(list = ls())
 # eachstate_GSEA_road<-"F:\\2study\\CRC_study\\data\\real_data\\GSEA\\67_GSEA_plot\\"
 setwd("F:\\2study\\CRC_study\\data\\real_data\\GSEA\\GSEA_result")
 
-
-###GSEA富集分析数据
 filename_select_group <- list.files("F:\\2study\\CRC_study\\data\\real_data\\GSEA\\67_GSEA_result")
 
 
