@@ -60,21 +60,21 @@ func_round<-function(v){return(round(v,3))}
 gene_HR_res$pvalue<-func_round(gene_HR_res$pvalue)
 write.csv(gene_HR_res,"TCGA.csv")
 ggplot(data=gene_HR_res, aes(y=TF,color='red'),ylab=NA) + 
-  geom_errorbar(data = gene_HR_res,aes(xmin = low95, xmax=up95, ylab=NA), #误差条表示95%的置信区间
-                width=0.2,#误差条末端短横线的宽度
+  geom_errorbar(data = gene_HR_res,aes(xmin = low95, xmax=up95, ylab=NA), 
+                width=0.2,
                 position=position_dodge(0.9), 
                 alpha = 1,xlim=c(0,3),
                 size=1)  +theme(axis.text.y = element_blank())+
   theme_bw()+
-  #绘制中位数为点图
+ 
   geom_point(data = gene_HR_res,aes(x=HR, y=TF),pch=19,position=position_dodge(0.9),size=4,ylab=NA,
              ylab=gene_HR_res$pvalue) +
   
   #scale_color_manual(values = c('#4393C3','#D6604D') )+ 
   #设置填充的颜色c("#56B4E9", "#E69F00") c("#1F78B4","#CB181D") c('#4393C3','#D6604D') 
   theme(
-    panel.grid.major = element_blank(),   #不显示网格线
-    panel.grid.minor = element_blank())+  #不显示网格线
-  #xlab("Cancer")+ylab("log2(FPKM+1) (TRPA1)")+ #设置x轴和y轴的标题
+    panel.grid.major = element_blank(),   
+    panel.grid.minor = element_blank())+ 
+  #xlab("Cancer")+ylab("log2(FPKM+1) (TRPA1)")+
   geom_vline(xintercept=1, linetype="dotted") 
 
