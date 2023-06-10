@@ -25,12 +25,12 @@ ggplot(dfc.1, aes(Cell_Type, Y)) +
   geom_tile(aes(fill = Value),size=1,colour = "black")+
   scale_fill_gradient2(low = "#F5B4BF",high = "#EA5384")+
   geom_text(aes(label=Value),col ="black",size = 4)+
-  theme_minimal()+# 不要背景
-  theme(axis.title.x=element_blank(),#不要title
-        axis.ticks.x=element_blank(),#不要x轴
-        axis.title.y=element_blank(),#不要y轴
+  theme_minimal()+
+  theme(axis.title.x=element_blank(),
+        axis.ticks.x=element_blank(),
+        axis.title.y=element_blank(),
         axis.text.x = element_text(angle = 45, hjust = 0.5,vjust= 0.5,
-                                   colour="black",family="Times",size=12),# 调整x轴文字
+                                   colour="black",family="Times",size=12),
         axis.text.y = element_text(size = 12,family="Times",face="plain"),
         
   )
