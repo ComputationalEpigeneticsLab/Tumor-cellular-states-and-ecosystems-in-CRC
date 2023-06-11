@@ -1,5 +1,4 @@
 
-###
 rm(list = ls())
 setwd("F:\\2study\\CRC_study\\data\\real_data\\生存分析\\每个生态型生存分析p值柱形图")
 data<-read.table("P_value.txt",stringsAsFactors = F,header = T)
@@ -45,21 +44,18 @@ ggplot(dfa, aes(Y,cell_type)) +
 dev.off() 
 
 
-
-
 ###
 #the functional pathways of seven ecotypes
 rm(list = ls())
 setwd("F:\\2study\\CRC_study\\data\\real_data\\生存分析\\每个生态型生存分析p值柱形图")
 ecotype_gene<-read.table("ecotype_gene.txt",stringsAsFactors = F,header = T)
 ecotype_gene<-ecotype_gene[,c(4,1)]
-#免疫通路信息
+
 immuneGene<- readLines("immune.gmt")
 resGene <- strsplit(immuneGene, "\t")
 names(resGene) <- vapply(resGene, function(y) y[1], character(1))
 resGene <- lapply(resGene, "[", -c(1:2))
 
-#
 mat<-matrix(ncol=5)
 Ecotype<-unique(ecotype_gene[,1])
 
@@ -104,7 +100,6 @@ immuneGene<- readLines("Hallmarker.gmt")
 resGene <- strsplit(immuneGene, "\t")
 names(resGene) <- vapply(resGene, function(y) y[1], character(1))
 resGene <- lapply(resGene, "[", -c(1:2))
-
 #
 mat<-matrix(ncol=5)
 Ecotype<-unique(ecotype_gene[,1])
@@ -172,11 +167,6 @@ for(i in 1:length(ecotype)){
               col.names = T,sep = '\t')
 }
 
-
-
-
-
-
 ###
 rm(list = ls())
 setwd("F:\\2study\\CRC_study\\data\\real_data\\生存分析\\每个生态型生存分析p值柱形图")
@@ -201,10 +191,6 @@ ggplot(pathway_info,aes(Ecotype,pathway))+
   scale_colour_gradient(low = "#808080",high = "#000000")+
   theme_bw()+my_theme
 dev.off()  
-
-
-
-
 
 
 
