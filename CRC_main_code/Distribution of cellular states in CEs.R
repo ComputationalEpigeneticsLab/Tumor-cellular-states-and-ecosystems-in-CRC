@@ -11,12 +11,9 @@ library(reshape)
 
 setwd("F:\\2study\\CRC_study\\data\\real_data\\CRC数据发现和验证EcoTyper\\状态和生态型的分析\\生态型中细胞状态的分布")
 
-
 state_ecotype<-read.table("ecotypes.txt",stringsAsFactors=F,header=T)
 state_ecotype<-state_ecotype[,c(1,5)]
 state_ecotype$link<-1
-
-
 
 state_ecotype<-reshape::melt(state_ecotype,id='link')
 variable<-summary(state_ecotype$variable)
@@ -24,14 +21,10 @@ state_ecotype$flow<-rep(1:variable[1],length(variable))
 head(state_ecotype)
 write.table(virus_pathway,"virus_pathway.txt",quote = F,sep = "\t")
 
-
-
 ####sankey
 library(ggalluvial)
 library(RColorBrewer)
 library(randomcoloR)
-
-
 
 col_sankey<-c('B.cells'="#E6AB02", 'CD4.T.cells'="#E7298A", 'CD8.T.cells'="#7570B3", 
               'Dendritic.cells'="#D95F02",'Endothelial.cells'="#1B9E77",'Epithelial.cells'="#CAB2D6",
