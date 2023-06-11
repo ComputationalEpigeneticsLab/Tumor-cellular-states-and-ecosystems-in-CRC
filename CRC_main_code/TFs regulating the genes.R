@@ -1,6 +1,4 @@
 
-
-###
 rm(list = ls())
 library(ReactomePA)
 library(tidyverse)
@@ -14,28 +12,21 @@ rm(list = ls())
 setwd("F:\\2study\\CRC_study\\data\\real_data\\motif\\EcoType差异表达基因")
 ###
 discovery_exp<-read.csv("discovery_end_exp.txt",stringsAsFactors = F,header = T,sep = "\t",row.names = 1)
-
-###
 ecotype_sample<-read.csv("ecotype_assignment.txt",stringsAsFactors = F,header = T,sep = "\t")
 
 ecotype_name<-unique(ecotype_sample$Ecotype)
 
-# ecotype_sample_group<-ecotype_sample
-
 diff_result_road<-"F:\\2study\\CRC_study\\data\\real_data\\motif\\EcoType差异表达基因\\diff_gene\\"
 for (m in 1:length(ecotype_name)) {
   
-  #基因
   gene<-discovery_exp[,which(colnames(discovery_exp) %in% ecotype_sample[,1])]
-  
-  #分组
+
   ecotype_sample_group<-ecotype_sample
   ecotype_sample_group[which(ecotype_sample_group$Ecotype==ecotype_name[m]),3]<-c("group1")
   ecotype_sample_group[!(ecotype_sample_group$Ecotype==ecotype_name[m]),3]<-c("group2")
   colnames(ecotype_sample_group)<-c("sample","state","group")
   group<-ecotype_sample_group[,c(1,3)]
-  
-  #结果文件
+ 
   result<-c()
   
   for (n in 1:nrow(gene)) {
@@ -51,7 +42,7 @@ for (m in 1:length(ecotype_name)) {
     p_value <- wilcox.test(gene~group, gene_n)$p.value
     # if (!is.na(p_value) & p_value < 0.05) {
     stat <- summaryBy(gene~group, gene_n, FUN = c(mean, median))
-    ###结果
+ 
     result <- rbind(result, c(gene_id, stat[1,2],stat[2,2],p_value,ecotype_name[m]))
     # }
     
@@ -63,10 +54,6 @@ for (m in 1:length(ecotype_name)) {
               quote = F,row.names = F,col.names = T,sep = '\t')
   
 }
-
-
-
-
 
 
 ###
@@ -92,8 +79,6 @@ for (i in 1:length(filename_select_group)) {
   
   
 }
-
-
 
 
 ###-logp
@@ -128,19 +113,14 @@ for (i in 1:length(filename_select_group)) {
 }
 
 
-
-
-
 ###logFC
 rm(list = ls())
 setwd("F:\\2study\\CRC_study\\data\\real_data\\GSEA")
 
-###
 filename_select_group <- list.files("F:\\2study\\CRC_study\\data\\real_data\\motif\\EcoType差异表达基因\\diff_result_logp")
 
 diff_addpvalue_road<-"F:\\2study\\CRC_study\\data\\real_data\\motif\\EcoType差异表达基因\\diff_result_logFC\\"
 
-###
 for (i in 1:length(filename_select_group)) {
   
   #
@@ -164,9 +144,6 @@ for (i in 1:length(filename_select_group)) {
 }
 
 
-
-
-
 ###sort
 rm(list = ls())
 setwd("F:\\2study\\CRC_study\\data\\real_data\\GSEA")
@@ -176,10 +153,8 @@ filename_select_group <- list.files("F:\\2study\\CRC_study\\data\\real_data\\mot
 
 diff_addpvalue_road<-"F:\\2study\\CRC_study\\data\\real_data\\motif\\EcoType差异表达基因\\diff_result_sort\\"
 
-
 for (i in 1:length(filename_select_group)) {
   
-  #
   state_diff<-read.table(paste0("F:\\2study\\CRC_study\\data\\real_data\\motif\\EcoType差异表达基因\\diff_result_logFC\\",
                                 filename_select_group[i]),as.is=T,header = T,sep = "\t")
   
@@ -227,14 +202,6 @@ for (i in 1:length(filename_select_group)) {
 }
 
 
-
-
-
-
-
-
-
-
 rm(list = ls())
 setwd("F:\\2study\\CRC_study\\data\\real_data\\motif")
 
@@ -277,9 +244,6 @@ motifEnrichmentTable_wGenes <- addSignificantGenes(motifEnrichmentTable,
                                                    nCores=1,
                                                    method="aprox")
 
-
-
-
 ###motif
 setwd("F:\\2study\\CRC_study\\data\\real_data\\motif\\ecotype_motif_result")
 pdf("E1_AUC_hist.pdf",width = 5,height = 5)
@@ -299,7 +263,6 @@ names(cg)
 cgmotif=motifAnnotations_hgnc[match(names(cg),motifAnnotations_hgnc$motif),]
 cgmotif=na.omit(cgmotif)
 
-
 ###
 # motifEnrichmentTable_wGenes
 motifEnrichmentTable_wGenes_wLogo <- addLogo(motifEnrichmentTable_wGenes)
@@ -307,8 +270,6 @@ library(DT)
 datatable(motifEnrichmentTable_wGenes_wLogo[,-c("enrichedGenes", "TF_lowConf"), with=FALSE], 
           escape = FALSE, # To show the logo
           filter="top", options=list(pageLength=5))
-
-
 
 ###
 anotatedTfs <- lapply(split(motifEnrichmentTable_wGenes$TF_highConf,
@@ -352,17 +313,7 @@ visNetwork(nodes, edges) %>% visOptions(highlightNearest = TRUE,
 dev.off()
 
 
-
-
-
-
-
-
-
-
-
 ###
-
 rm(list = ls())
 # setwd("/boot3/lisi/study2/CRC/motif")
 setwd("F:\\2study\\CRC_study\\data\\real_data\\motif")
@@ -373,8 +324,6 @@ geneLists <- list(hypoxia=read.table(txtFile, stringsAsFactors=FALSE)[,1])
 # txtFile <- file.path('/boot3/lisi/study2/CRC/motif/ecotype_high_express_sig/E1.txt')
 # geneLists <- list(hypoxia=read.table(txtFile, stringsAsFactors=FALSE)[,1])
 
-
-#
 motifRankings <- importRankings("hg19-500bp-upstream-7species.mc9nr.feather")
 
 #
@@ -393,11 +342,8 @@ motifEnrichmentTable_wGenes <- cisTarget(geneLists, motifRankings,
 # motifEnrichmentTable_wGenes2=na.omit(motifEnrichmentTable_wGenes)
 
 setwd("F:\\2study\\CRC_study\\data\\real_data\\motif\\ecotype_motif_result")
-
-##
 write.table(motifEnrichmentTable_wGenes,"E7_motif.txt",quote = F,sep = "\t",row.names = F)
 
-##
 motifEnrichmentTable_wGenes_logo <- addLogo(motifEnrichmentTable_wGenes)
 write.table(motifEnrichmentTable_wGenes_logo,"E7_motif_logo.txt",quote = F,sep = "\t",row.names = F)
 library(DT)
@@ -406,11 +352,3 @@ library(DT)
 datatable(motifEnrichmentTable_wGenes_logo[,-c("enrichedGenes", "TF_lowConf"), with=FALSE], 
           escape = FALSE, # To show the logo
           filter="top", options=list(pageLength=5))
-
-
-
-
-
-
-
-
