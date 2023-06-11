@@ -22,11 +22,3 @@ ggplot(data_plot, aes(x=X, y=Y, colour=label)) +
           axis.line.x = element_line(color="black", size = 0.5),
           axis.line.y = element_line(color="black", size = 0.5),
           panel.background = element_blank())
-
-
-
-
-
-
-
-
