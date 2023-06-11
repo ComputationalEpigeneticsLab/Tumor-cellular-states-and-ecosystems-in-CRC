@@ -65,20 +65,12 @@ ResMart_lower<-as.data.frame(ResMart)
 ResMart_lower$HallMarkerPathway<-tolower(ResMart_lower$HallMarkerPathway)
 
 
-
 ###
 p<-p.adjust(ResMart_lower[,5],n=nrow(ResMart_lower),method = "fdr")###bonferroni
 index1<-which(ResMart_lower[,5]<0.05)##
 index2<-which(p<0.05)##
 ResMart_adjust<-ResMart_lower[index2,]
 write.table(ResMart_adjust,"ResMart_adjust_HallMarker_lower.txt",quote = F,sep = "\t",row.names = F)
-
-
-
-
-
-
-
 
 
 ##immune
@@ -134,7 +126,7 @@ for (i in 1:length(cells)) {
       k <- intersect(n,m) 
       k_num <- length(k)
       pvalues <- 1-phyper(k_num-1, m_num, N_num-m_num, n_num)
-      #输出
+      
       ResMartMid<-c(cells[i],states[j],names(resGene)[[s]],k_num,pvalues,paste(k,collapse=","))
       ResMart<-rbind(ResMart,ResMartMid)
       
@@ -153,12 +145,6 @@ index2<-which(p<0.05)
 ResMart_adjust<-ResMart[index2,]
 write.table(ResMart_adjust,"ResMart_adjust_immune_adjust.txt",quote = F,sep = "\t",row.names = F)
 
-
-
-
-
-
-
 #####################################################################################################################
 ###The Circos of HallMarker+immune
 rm(list = ls())
@@ -171,14 +157,10 @@ circos_inter<-states_pathway[,c(3,5,6)]
 # circos_inter<-states_pathway
 circos_inter<-circos_inter[which(circos_inter$HallMarkerPathway!=""),]
 
-
-
 pathway_type<-read.csv("HallMarker_immune_type.txt",stringsAsFactors = F,header = T,sep = "\t")
 pathway_type<-pathway_type[which(pathway_type$Node!=""),]
 
-
 brand = c(structure(pathway_type$Type, names=pathway_type$Node))
-
 brand = brand[!duplicated(names(brand))]
 brand = brand[order(brand, names(brand))]
 brand=factor(brand,levels = unique(brand)[c(1:7,10:14,8:9)])
@@ -188,7 +170,6 @@ mycolor<-c("#E6AB02","#E7298A","#7570B3","#D95F02","#1B9E77","#CAB2D6",
            "#FDBF6F","#F7AEB3","#B2DF8A","#A6CEE3","#999999","#F780BF",
            "#D6372E","#FADD4B")
 
-# 颜色
 library(RColorBrewer)
 library(randomcoloR)
 # mycolor<-randomColor(15)#[c(1,2,4,5,6,7,8,9,11,12)]#[c(1:2,4:12)] [c(1,2,4,5,6,7,8,9,11,12)]
@@ -199,7 +180,7 @@ library(circlize)
 circos.clear()
 gap.after = do.call("c", lapply(table(brand), function(i) c(rep(0.3, i-1), 4)))
 circos.par(gap.after = gap.after, cell.padding = c(0, 0, 0, 0))
-# 添加内部连线（有颜色）
+
 chordDiagram(circos_inter, order = names(brand),
              grid.col = model_color,
              directional = 1, annotationTrack = "grid", preAllocateTracks = list(
