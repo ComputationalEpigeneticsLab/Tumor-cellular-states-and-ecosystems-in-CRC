@@ -3,8 +3,6 @@ setwd("F:\\2study\\CRC_study\\data\\real_data\\Fib相关基因热图")
 
 Fib_state_gene<-read.table("Fib_state_gene.txt",stringsAsFactors = F,header = T)
 
-
-
 library(ggpubr)
 compare_means(ITGBL1~State,data = Fib_state_gene,method = "t.test")
 my_comparisons<-list(c("S03","S02"),c("S03","S01"),c("S03","S04"))
@@ -28,9 +26,7 @@ ggplot(Fib_state_gene,
         panel.grid.minor = element_blank())+
   stat_compare_means(comparisons = my_comparisons,method = "t.test")+
   ylab("Expression")+xlab("States") 
-
 dev.off()
-
 
 
 pdf("BGN.pdf",width = 4,height = 4)
