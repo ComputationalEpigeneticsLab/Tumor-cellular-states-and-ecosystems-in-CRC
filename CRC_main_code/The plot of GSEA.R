@@ -1,6 +1,3 @@
-
-
-
 ################################################################################################
 ######################one vs others #####################################
 rm(list = ls())
@@ -19,28 +16,19 @@ discovery_exp<-read.csv("discovery_end_exp.txt",stringsAsFactors = F,header = T,
 
 filename_select_group <- list.files("F:\\2study\\CRC_study\\data\\real_data\\GSEA\\cell_group_info")
 
-
 cells<-c('B.cells','CD4.T.cells','CD8.T.cells','Dendritic.cells','Endothelial.cells',
          'Epithelial.cells','Fibroblasts','Mast.cells','Monocytes.and.Macrophages','NK.cells',
          'PCs','PMNs')
-
-
 ###
 diff_result_road<-"F:\\2study\\CRC_study\\data\\real_data\\GSEA\\diff_result\\"
 
-
 Sys.time()
 for (r in 1:length(cells)) {
-  
-  
- 
+
   state<-read.table(paste0("F:\\2study\\CRC_study\\data\\real_data\\GSEA\\cell_group_info\\",
                            filename_select_group[r]),as.is=T,header = T,sep = "\t")
   cell_state<-state[,c(1,2)]
-  
- 
   gene<-discovery_exp[,which(colnames(discovery_exp) %in% cell_state$ID)]
-  
   state_name<-unique(cell_state$State)
  
   for (m in 1:length(state_name)) {
@@ -66,10 +54,7 @@ for (r in 1:length(cells)) {
       p_value <- wilcox.test(gene~group, gene_n)$p.value
       # if (!is.na(p_value) & p_value < 0.05) {
       stat <- summaryBy(gene~group, gene_n, FUN = c(mean, median))
-      ###结果
-      # result <- rbind(result, c(gene_id, as.character(stat[1,1]), stat[1,2], stat[1,3], 
-      #                           as.character(stat[2,1]), stat[2,2], stat[2,3], p_value,state_name[m],ad_state))
-      # 
+    
       result <- rbind(result, c(gene_id, stat[1,2],stat[2,2],p_value,state_name[m],ad_state))
       # }
       
@@ -86,8 +71,6 @@ for (r in 1:length(cells)) {
 }
 
 Sys.time()
-
-
 
 
 ###
@@ -139,7 +122,6 @@ for (i in 1:length(filename_select_group)) {
     colnames(state_diff)[8]<-c("logp")
   }
   
-  
   write.table(state_diff,paste0(diff_addpvalue_road,gsub(".txt","",filename_select_group[i]),".txt"),
               quote = F,row.names = F,col.names = T,sep = '\t')
   
@@ -148,17 +130,13 @@ for (i in 1:length(filename_select_group)) {
 
 
 
-
-
 ###logFC
 rm(list = ls())
 setwd("F:\\2study\\CRC_study\\data\\real_data\\GSEA")
 
 filename_select_group <- list.files("F:\\2study\\CRC_study\\data\\real_data\\GSEA\\diff_result_logp")
-
 diff_addpvalue_road<-"F:\\2study\\CRC_study\\data\\real_data\\GSEA\\diff_result_logFC\\"
 
-###
 for (i in 1:length(filename_select_group)) {
   
   
@@ -183,17 +161,13 @@ for (i in 1:length(filename_select_group)) {
 
 
 
-
-
 ###sort
 rm(list = ls())
 setwd("F:\\2study\\CRC_study\\data\\real_data\\GSEA")
 
 
 filename_select_group <- list.files("F:\\2study\\CRC_study\\data\\real_data\\GSEA\\diff_result_logFC")
-
 diff_addpvalue_road<-"F:\\2study\\CRC_study\\data\\real_data\\GSEA\\diff_result_sort\\"
-
 
 for (i in 1:length(filename_select_group)) {
   
@@ -216,13 +190,10 @@ for (i in 1:length(filename_select_group)) {
   
 }
 
-##################################################################################################
-
-
 
 ##################################################################################
 ###########################GSEA###################################
-####计算67个通路富集分析的GSEA
+####
 library(ReactomePA)
 library(tidyverse)
 library(data.table)
@@ -233,14 +204,10 @@ library(enrichplot)
 
 rm(list = ls())
 
-##
+
 eachstate_GSEA_road<-"F:\\2study\\CRC_study\\data\\real_data\\GSEA\\67_GSEA_result\\"
-
-
 setwd("F:\\2study\\CRC_study\\data\\real_data\\GSEA")
-
 kegmt<-read.gmt("all_pathway.gmt")
-
 
 ###
 filename_select_group <- list.files("F:\\2study\\CRC_study\\data\\real_data\\GSEA\\diff_result_sort")
@@ -364,8 +331,6 @@ p+ geom_text_repel(
 dev.off()
 
 
-
-
 ###Fibroblasts_S03
 rm(list = ls())
 
@@ -422,7 +387,6 @@ dev.off()
 
 
 
-
 ####GSEA: top 5
 library(ReactomePA)
 library(tidyverse)
@@ -436,16 +400,11 @@ rm(list = ls())
 
 ##
 eachstate_GSEA_road<-"F:\\2study\\CRC_study\\data\\real_data\\GSEA\\67_GSEA_result\\"
-
-
-
 setwd("F:\\2study\\CRC_study\\data\\real_data\\GSEA")
-
 kegmt<-read.gmt("all_pathway.gmt")
 kegmt$term<-tolower(kegmt$term)
 kegmt$term<-gsub("hallmark_","",kegmt$term)
 kegmt$term<-gsub("_"," ",kegmt$term)
-
 
 setwd("F:\\2study\\CRC_study\\data\\real_data\\GSEA\\diff_result_sort")
 
@@ -453,7 +412,6 @@ gene_list<-read.csv("Monocytes.and.Macrophages_S04.txt",stringsAsFactors = F,hea
 gene_list<-gene_list[,c(1,10,6)]
 gene_list[,2]=as.numeric(gene_list[,2])
 gene_list=gene_list[order(gene_list[,2],decreasing = T),]
-
 
 geneList<-gene_list[,2]
 names(geneList)<-as.character(gene_list[,1])
@@ -470,12 +428,9 @@ color<-c(
 )
 
 
-
 gseaplot2(KEGG,c(39,44),rel_heights = c(0.8, 0.2, 0.6),
           base_size = 16,color = color,title = "Mon/Mac S04")
 dev.off()
-
-
 
 
 
@@ -484,7 +439,6 @@ rm(list = ls())
 setwd("F:\\2study\\CRC_study\\data\\real_data\\GSEA\\GSEA_result")
 
 filename_select_group <- list.files("F:\\2study\\CRC_study\\data\\real_data\\GSEA\\67_GSEA_result")
-
 
 all_result<-c()
 for (i in 1:length(filename_select_group)) {
@@ -499,8 +453,6 @@ for (i in 1:length(filename_select_group)) {
 
 GSEA_list<-read.table(paste0("F:\\2study\\CRC_study\\data\\real_data\\GSEA\\67_GSEA_result\\",
                              filename_select_group[i]),as.is=T,header = T,sep = "\t")
-
-
 
 
 
