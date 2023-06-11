@@ -81,10 +81,3 @@ for(i in 1:length(cells)){
   cat(i,sep = '\n')
 }
 
-
-
-
-
-
-
-
