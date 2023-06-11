@@ -9,9 +9,7 @@ library(ggpubr)
 th=theme(axis.text.x = element_text(angle = 45,vjust = 0.5))
 
 GDSC2_Expr = readRDS('GDSC2_Expr (RMA Normalized and Log Transformed).rds')
-
 GDSC2_Res = readRDS("GDSC2_Res.rds")
-
 GDSC2_Res <- exp(GDSC2_Res) 
 
  
