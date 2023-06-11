@@ -5,14 +5,11 @@ discovery_exp<-read.csv("discovery_end_exp.txt",stringsAsFactors = F,header = T,
 ecotype_sample<-read.csv("ecotype_assignment.txt",stringsAsFactors = F,header = T,sep = "\t")
 ecotype_sample_exp<-discovery_exp[,which(colnames(discovery_exp) %in% ecotype_sample$ID)]
 
-
 ###TF
 ecotype_TF<-read.csv("TF.txt",stringsAsFactors = F,header = T,sep = "\t")
 TF<-unique(ecotype_TF$TF)
 TF_expression<-ecotype_sample_exp[which(rownames(ecotype_sample_exp) %in% TF),]
 write.table(TF_expression,"TF_expression_hot.txt",row.names = T,col.names = T,sep = "\t",quote=F)
-
-
 
 ###boxplot
 rm(list = ls())
@@ -22,8 +19,6 @@ TF_expression<-read.table("TF_expression.txt",stringsAsFactors = F,header = T)
 ecotype_sample<-read.csv("ecotype_assignment.txt",stringsAsFactors = F,header = T,sep = "\t")
 TF_expression_ecotype<-merge(ecotype_sample,TF_expression,by="ID")
 
-
-###分组
 one_ecotype_TF<-TF_expression_ecotype[,c(1,2,which(colnames(TF_expression_ecotype)=="POLR2A"))]
 
 one_ecotype_TF[which(one_ecotype_TF$Ecotype=="CE6"),4]<-c("CE6")
@@ -60,9 +55,6 @@ ggplot(one_ecotype_TF,
   ylab("Expression")+xlab("Ecotype") #
 dev.off()
 
-
-
-
 ###heatmap
 rm(list = ls())
 setwd("F:\\2study\\CRC_study\\data\\real_data\\motif\\高表达的motif\\top5")
@@ -79,7 +71,6 @@ rownames(ecotype_sample_fig)<-rownames(ecotype_sample)
 
 TF_expression<-TF_expression[,rownames(ecotype_sample_fig)]
 
-#基因分组
 gene_group<-read.csv("gene_group.txt",stringsAsFactors = F,header = T,sep = "\t",row.names = 1)
 gene_group$gene<-rownames(gene_group)
 
@@ -94,8 +85,6 @@ rownames(gene_group_fig)<-rownames(gene_group)
 TF_expression<-TF_expression[rownames(gene_group_fig),]
 
 library(pheatmap)
-
-
 pdf("TF_exp_heatmap.pdf",width = 8,height = 4.5)
 bk=c(seq(-2,0,by=0.01),seq(0.01,2,by=0.01))
 pheatmap(TF_expression, 
@@ -116,11 +105,4 @@ pheatmap(TF_expression,
          
 )
 dev.off()
-
-
-
-
-
-
-
 
