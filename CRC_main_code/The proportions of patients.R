@@ -1,4 +1,3 @@
-##############################################
 rm(list = ls())
 setwd("F:\\2study\\CRC_study\\data\\real_data\\CRC数据发现和验证EcoTyper\\细胞类型中样本比例")
 
