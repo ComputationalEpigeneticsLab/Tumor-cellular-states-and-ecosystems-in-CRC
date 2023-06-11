@@ -40,7 +40,7 @@ for(i in 1:length(tfGene)){
   HR = (data.survdiff$obs[2]/data.survdiff$exp[2])/(data.survdiff$obs[1]/data.survdiff$exp[1])
   up95 = exp(log(HR) + qnorm(0.975)*sqrt(1/data.survdiff$exp[2]+1/data.survdiff$exp[1]))
   low95 = exp(log(HR) - qnorm(0.975)*sqrt(1/data.survdiff$exp[2]+1/data.survdiff$exp[1])) 
-  ###合并
+  #
   gene_HR<-c(tfGene[i],p.val,HR,up95,low95)
   gene_HR_res<-rbind(gene_HR_res,gene_HR)
 }
@@ -69,9 +69,7 @@ ggplot(data=gene_HR_res, aes(y=TF,color='red'),ylab=NA) +
  
   geom_point(data = gene_HR_res,aes(x=HR, y=TF),pch=19,position=position_dodge(0.9),size=4,ylab=NA,
              ylab=gene_HR_res$pvalue) +
-  
   #scale_color_manual(values = c('#4393C3','#D6604D') )+ 
-  #设置填充的颜色c("#56B4E9", "#E69F00") c("#1F78B4","#CB181D") c('#4393C3','#D6604D') 
   theme(
     panel.grid.major = element_blank(),   
     panel.grid.minor = element_blank())+ 
