@@ -1,12 +1,8 @@
-
-
 rm(list = ls())
 setwd("F:\\2study\\CRC_study\\data\\real_data\\CRC数据发现和验证EcoTyper\\状态和生态型的分析\\生态型中细胞状态的分布")
 
 state_number<-read.csv("state_number2.txt",stringsAsFactors = F,header = T,sep = "\t")
 library(tidyverse)
-
-
 
 color<-c('B.cells'="#E6AB02", 'CD4.T.cells'="#E7298A", 'CD8.T.cells'="#7570B3", 
          'Dendritic.cells'="#D95F02",'Endothelial.cells'="#1B9E77",'Epithelial.cells'="#CAB2D6",
